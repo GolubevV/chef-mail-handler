@@ -62,8 +62,8 @@ class MailHandler < Chef::Handler
         :body => body
       }
       pony_options[:via] = options[:via] if options[:via]
-      pony_options[:via_options] = options[:via_options] if options[:via_options]
-
+      pony_options[:via_options] = Hash[options[:via_options].map{ |k, v| [k.to_sym, v] }] if options[:via_options]
+      Chef::Log.debug("mail handler options: #{pony_options}")
       Pony.mail(pony_options)
     end
   end
